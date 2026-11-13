@@ -1,0 +1,45 @@
+Model names recorded in more than one spelling (merged):
+  WUH721816ALE6L4        as WDC WUH721816ALE6L4      drives =  26,286, failures =   74, AFR =   1.13%
+  WUH721816ALE6L4        as WUH721816ALE6L4          drives =     541, failures =    6, AFR =   4.87%
+Drives: 359,101 in file -> 354,415 after dropping boot drives, 'Other' makers and small models (31 models kept).
+Failures: 1,516 over 31,553,350 drive-days.
+Warning signals measured on: each drive's first day in Q2 (before failure).
+
+Likelihood-ratio tests (Model 1):
+  model        chi-sq =    502.9, df =  30, p = <1e-16
+  age_years    chi-sq =     14.4, df =   1, p = 0.000145
+  temp_5c      chi-sq =     16.4, df =   1, p = 5e-05
+  realloc      chi-sq =    899.5, df =   1, p = <1e-16
+  pending      chi-sq =   1545.6, df =   1, p = <1e-16
+
+Comparison - same model with quarter-maximum SMART (includes failure day):
+  realloc_max     8.95  (7.69-10.43)
+  pending_max    26.70  (22.91-31.12)
+
+Model 1 - drive condition (hazard ratio, 95% CI):
+  Age (+1 year powered on)                         0.93  (0.89-0.96)
+  Temperature (+5 °C)                             1.10  (1.05-1.16)
+  Reallocated sectors > 0 at start (SMART 5)       8.88  (7.67-10.29)
+  Pending sectors > 0 at start (SMART 197)        18.67  (16.11-21.65)
+
+Model 1 - most reliable models vs WUH722222ALE6L4 (lowest hazard ratios):
+  WUH721816ALE6L4 (WDC)                  0.58  (0.41-0.83)
+  ST8000DM002 (Seagate)                  0.64  (0.42-0.97)
+  MG08ACA16TE (Toshiba)                  0.65  (0.37-1.16)
+Least reliable models vs WUH722222ALE6L4:
+  MG08ACA16TEY (Toshiba)                 5.50  (3.68-8.22)
+  MG07ACA14TEY (Toshiba)                 5.01  (2.16-11.64)
+  ST16000NM002J (Seagate)                4.81  (1.67-13.83)
+Not estimable (no/few failures): ST12000NM000J, ST14000NM000J, ST8000NM000A
+
+Model 2 - warning effect differs by manufacturer? LRT chi-sq = 86.7, df = 3, p = <1e-16
+Warning hazard ratio by manufacturer:
+  Seagate     27.7  (23.0-33.4)
+  HGST       189.9  (113.0-319.2)
+  Toshiba     29.8  (24.5-36.3)
+  WDC         57.4  (43.2-76.2)
+
+Rare-event check: 1,511 failures / 34 parameters = 44.4 events per parameter.
+Models with fewer than 5 failures (wide CIs): 6 of 31.
+Multicollinearity (VIF, Model 1): age_years = 4.8, temp_5c = 1.1, realloc = 1.2, pending = 1.2
+  (VIF > 5 means the effect is hard to separate from drive model - age usually is.)
