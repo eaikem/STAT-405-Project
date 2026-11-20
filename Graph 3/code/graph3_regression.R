@@ -84,8 +84,8 @@ fwrite(
   file.path(output_dir, "results", "daily_failure_rates.csv")
 )
 
-# Linear regression
-model <- lm(failure_rate ~ day, data = daily_results)
+# Linear regression using failure counts
+model <- lm(failures ~ day, data = daily_results)
 
 # Save regression results
 capture.output(
@@ -93,10 +93,10 @@ capture.output(
   file = file.path(output_dir, "results", "regression_results.txt")
 )
 
-# Create graph
+# Create graph using actual failure counts
 regression_plot <- ggplot(
   daily_results,
-  aes(x = day, y = failure_rate)
+  aes(x = day, y = failures)
 ) +
   geom_point(color = "steelblue", size = 2) +
   geom_smooth(
@@ -106,16 +106,16 @@ regression_plot <- ggplot(
     se = TRUE
   ) +
   labs(
-    title = "Daily Hard-Drive Failure Rate Over Time",
-    subtitle = "Backblaze Q2 2026 - 91-Day Complete Drives",
+    title = "Daily Hard-Drive Failures Over Time",
+    subtitle = "Backblaze Q2 2026 - 325,689 Complete Drives",
     x = "Day of Quarter",
-    y = "Daily Failure Rate (%)"
+    y = "Number of Drive Failures"
   ) +
   theme_minimal()
 
 # Save graph
 ggsave(
-  file.path(output_dir, "figures", "daily_failure_regression.png"),
+  file.path(output_dir, "figures", "daily_failures_regression.png"),
   regression_plot,
   width = 10,
   height = 6,
